@@ -376,6 +376,21 @@ footer span{color:#60a5fa}
 
 /* ── TRIAL DOWNLOAD ── */
 .trial-section{max-width:1140px;margin:0 auto;padding:0 32px 60px}
+
+/* QR Codes */
+.qr-section{max-width:1140px;margin:0 auto;padding:0 32px 60px}
+.qr-title{text-align:center;margin-bottom:24px}
+.qr-title h3{font-size:20px;font-weight:800;color:var(--dark);margin-bottom:6px}
+.qr-title p{font-size:14px;color:var(--muted)}
+.qr-grid{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.qr-card{background:#fff;border-radius:14px;padding:18px;text-align:center;
+  box-shadow:0 4px 16px rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.04);
+  transition:transform .25s,box-shadow .25s;width:200px}
+.qr-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(15,23,42,.12)}
+.qr-card img{width:160px;height:160px;display:block;margin:0 auto 10px;border-radius:8px}
+.qr-label{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.qr-url{font-size:11px;color:var(--muted);font-family:'Courier New',monospace;
+  background:transparent;padding:0;border-radius:0}
 .trial-card{background:linear-gradient(135deg,var(--blue-l),var(--teal-l));
   border-radius:20px;padding:32px 40px;display:flex;align-items:center;
   justify-content:space-between;gap:24px;border:1px solid var(--border)}
@@ -511,7 +526,7 @@ footer span{color:#60a5fa}
       <span class="badge p" id="b9"></span>
     </div>
     <div class="cta-row">
-      <a class="btn btn-primary" id="h-cta1" href="GesFacPress_Setup_v2.0.0.zip" download>Descarregar grátis</a>
+      <a class="btn btn-primary" id="h-cta1" href="https://github.com/gesfacpress/gesfacpress/releases/download/v2.0.0/GesFacPress_Setup_v2.0.0.zip">Descarregar grátis</a>
       <a href="#slides" class="btn btn-outline" id="h-cta2">Ver demonstração</a>
       <a href="funcionalidades_PT_FR.html" class="btn btn-outline" id="h-cta3">Funcionalidades</a>
     </div>
@@ -862,7 +877,7 @@ footer span{color:#60a5fa}
     </div>
     <div class="trial-right">
       <div class="trial-btns">
-        <a class="trial-direct" href="GesFacPress_Setup_v2.0.0.zip" download id="trial-direct">
+        <a class="trial-direct" href="https://github.com/gesfacpress/gesfacpress/releases/download/v2.0.0/GesFacPress_Setup_v2.0.0.zip" id="trial-direct">
           <span style="font-size:18px">⬇</span><span id="trial-direct-txt">Descarregar Agora</span>
         </a>
         <span class="trial-or" id="trial-or">OU</span>
@@ -871,6 +886,26 @@ footer span{color:#60a5fa}
         </button>
       </div>
       <span class="trial-size" id="trial-size">Windows 10/11 · ZIP ~104 MB</span>
+    </div>
+  </div>
+</section>
+
+<!-- QR CODES (Partilhar) -->
+<section class="qr-section">
+  <div class="qr-title">
+    <h3 id="qr-h">📱 Partilhar com o seu telemóvel</h3>
+    <p id="qr-p">Faça scan com a câmara do telemóvel para abrir no telefone ou descarregar.</p>
+  </div>
+  <div class="qr-grid">
+    <div class="qr-card">
+      <img src="qr_site.png" alt="QR site gesfacpress.com" loading="lazy">
+      <div class="qr-label" id="qr-l1">Abrir site</div>
+      <code class="qr-url">gesfacpress.com</code>
+    </div>
+    <div class="qr-card">
+      <img src="qr_download.png" alt="QR descarga GesFacPress" loading="lazy">
+      <div class="qr-label" id="qr-l2">Descarregar app</div>
+      <code class="qr-url">v2.0.0 · 96 MB</code>
     </div>
   </div>
 </section>
@@ -1072,6 +1107,9 @@ const T = {
     // Trial
     trialH:"Iniciar ensaio gratuito — 30 dias",trialP:"Instale o GesFacPress e experimente todas as funcionalidades durante 30 dias. Sem cartão de crédito. Windows 10 / 11.",
     trialBtn:"📝 Pedir por email",trialSize:"Windows 10/11 · ZIP ~104 MB",
+    qrH:"📱 Partilhar com o seu telemóvel",
+    qrP:"Faça scan com a câmara do telemóvel para abrir o site ou descarregar.",
+    qrL1:"Abrir site",qrL2:"Descarregar app",
     trialDirect:"Descarregar Agora",trialOr:"OU",
     mTitle:"Pedir Demonstração Gratuita",mSub:"Responderemos em menos de 24 horas",
     lName:"Nome",lCo:"Empresa",lEmail:"E-mail",lPhone:"Telefone",lCountry:"País",lMsg:"Mensagem (opcional)",
@@ -1197,6 +1235,9 @@ const T = {
     trialH:"Téléchargez maintenant — 100% gratuit",trialP:"Téléchargez l'installateur immédiatement, ou remplissez le formulaire et nous vous envoyons le lien par e-mail. Sans limite de temps.",
     trialDirect:"Télécharger Maintenant",trialOr:"OU",
     trialBtn:"📩 Recevoir par e-mail",trialSize:"Windows 10/11 · ZIP ~104 MB",
+    qrH:"📱 Partager sur votre mobile",
+    qrP:"Scannez avec l'appareil photo du mobile pour ouvrir le site ou télécharger.",
+    qrL1:"Ouvrir le site",qrL2:"Télécharger l'app",
     mTitle:"Demander une Démonstration Gratuite",mSub:"Nous répondrons en moins de 24 heures",
     lName:"Nom",lCo:"Entreprise",lEmail:"E-mail",lPhone:"Téléphone",lCountry:"Pays",lMsg:"Message (optionnel)",
     phName:"Votre nom",phCo:"Nom de l'entreprise",phPhone:"+33 ...",phMsg:"Parlez-nous de votre entreprise...",
@@ -1321,6 +1362,9 @@ const T = {
     trialH:"Download now — 100% free",trialP:"Download the installer now, or fill in the form and we'll send you the link by email. No time limit.",
     trialDirect:"Download Now",trialOr:"OR",
     trialBtn:"📩 Get by email",trialSize:"Windows 10/11 · ZIP ~104 MB",
+    qrH:"📱 Share with your mobile",
+    qrP:"Scan with your phone camera to open the site or download the app.",
+    qrL1:"Open site",qrL2:"Download app",
     mTitle:"Request a Free Demo",mSub:"We will respond within 24 hours",
     lName:"Name",lCo:"Company",lEmail:"E-mail",lPhone:"Phone",lCountry:"Country",lMsg:"Message (optional)",
     phName:"Your name",phCo:"Company name",phPhone:"+44 ...",phMsg:"Tell us about your company...",
@@ -1445,6 +1489,9 @@ const T = {
     trialH:"Descargue ahora — 100% gratis",trialP:"Descargue el instalador ahora, o rellene el formulario y le enviaremos el enlace por correo. Sin límite de tiempo.",
     trialDirect:"Descargar Ahora",trialOr:"O",
     trialBtn:"📩 Recibir por email",trialSize:"Windows 10/11 · ZIP ~104 MB",
+    qrH:"📱 Compartir con su móvil",
+    qrP:"Escanee con la cámara del móvil para abrir el sitio o descargar.",
+    qrL1:"Abrir sitio",qrL2:"Descargar app",
     mTitle:"Solicitar Demostración Gratuita",mSub:"Responderemos en menos de 24 horas",
     lName:"Nombre",lCo:"Empresa",lEmail:"E-mail",lPhone:"Teléfono",lCountry:"País",lMsg:"Mensaje (opcional)",
     phName:"Su nombre",phCo:"Nombre de la empresa",phPhone:"+34 ...",phMsg:"Cuéntenos sobre su empresa...",
@@ -1617,6 +1664,10 @@ function setLang(l) {
   _st('trial-or', t.trialOr);
   _st('trial-btn', t.trialBtn);
   _st('trial-size', t.trialSize);
+  _st('qr-h',  t.qrH);
+  _st('qr-p',  t.qrP);
+  _st('qr-l1', t.qrL1);
+  _st('qr-l2', t.qrL2);
 
   // Modal texts
   _st('m-title', t.mTitle);
