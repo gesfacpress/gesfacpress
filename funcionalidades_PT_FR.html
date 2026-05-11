@@ -45,6 +45,22 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var
   box-shadow:0 4px 12px rgba(37,99,235,.3)}
 .lang-btn:hover:not(.active){background:#fff;color:var(--blue)}
 
+/* BACK TO SITE */
+.topbar{display:flex;justify-content:flex-start;margin-bottom:18px}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;
+  border-radius:22px;background:#fff;color:var(--blue);font-weight:700;font-size:14px;
+  text-decoration:none;border:2px solid var(--blue-l);
+  box-shadow:0 4px 12px rgba(15,23,42,.06);transition:all .2s}
+.back-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);
+  box-shadow:0 6px 18px rgba(37,99,235,.3);transform:translateX(-2px)}
+.back-btn .arr{font-size:18px;line-height:1}
+.foot-cta{text-align:center;margin:32px 0 18px}
+.foot-cta a{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;
+  border-radius:30px;background:linear-gradient(135deg,var(--blue),var(--blue-d));
+  color:#fff;font-weight:800;font-size:15px;text-decoration:none;
+  box-shadow:0 8px 22px rgba(37,99,235,.35);transition:all .2s}
+.foot-cta a:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(37,99,235,.45)}
+
 /* SECTION GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;margin-bottom:32px}
 .card{background:#fff;border-radius:14px;padding:22px;
@@ -88,7 +104,7 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var
 @media print{
   body{background:#fff}
   .wrap{padding:18px}
-  .lang-bar,.foot a{display:none}
+  .lang-bar,.foot a,.topbar,.foot-cta{display:none}
   .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid;page-break-inside:avoid}
   .grid{grid-template-columns:repeat(2,1fr)}
   .lang-section{display:block !important}
@@ -97,6 +113,12 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var
 </head>
 <body>
 <div class="wrap">
+
+<div class="topbar">
+  <a href="https://www.gesfacpress.com" class="back-btn" id="back-top">
+    <span class="arr">←</span><span id="back-top-txt">Voltar ao site</span>
+  </a>
+</div>
 
 <div class="hero">
   <h1>GesFacPress</h1>
@@ -376,6 +398,12 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var
 
 </section>
 
+<div class="foot-cta">
+  <a href="https://www.gesfacpress.com" id="back-bottom">
+    <span style="font-size:18px">←</span><span id="back-bot-txt">Voltar ao site GesFacPress</span>
+  </a>
+</div>
+
 <div class="foot">
   <strong>GesFacPress v2.0.0</strong> &nbsp;·&nbsp; © LMC Software 2026 &nbsp;·&nbsp;
   <a href="mailto:info@gesfacpress.com" style="color:var(--blue);text-decoration:none">info@gesfacpress.com</a>
@@ -394,6 +422,8 @@ function setLang(l){
   document.getElementById('hero-sub').textContent = (l === 'fr')
     ? "Logiciel de gestion et facturation pour PME — 100 % hors ligne, multilingue, conforme à la réglementation fiscale française et portugaise."
     : "Software de gestão e facturação para PME — 100% offline, multilingue, conforme a regulamentação fiscal portuguesa e francesa.";
+  document.getElementById('back-top-txt').textContent = (l === 'fr') ? "Retour au site" : "Voltar ao site";
+  document.getElementById('back-bot-txt').textContent = (l === 'fr') ? "Retour au site GesFacPress" : "Voltar ao site GesFacPress";
   document.documentElement.lang = l;
   try { localStorage.setItem('gfp_lang', l); } catch(e){}
 }
