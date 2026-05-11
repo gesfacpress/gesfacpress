@@ -956,22 +956,22 @@ footer span{color:#60a5fa}
       <button class="react-btn" data-key="like" onclick="reactVote('like', this)">
         <span class="react-ico">👍</span>
         <span class="react-lbl" id="r-lbl-1">Gosto</span>
-        <span class="react-count" id="r-cnt-like">…</span>
+        <span class="react-count" id="r-cnt-like">0</span>
       </button>
       <button class="react-btn" data-key="love" onclick="reactVote('love', this)">
         <span class="react-ico">❤️</span>
         <span class="react-lbl" id="r-lbl-2">Adoro</span>
-        <span class="react-count" id="r-cnt-love">…</span>
+        <span class="react-count" id="r-cnt-love">0</span>
       </button>
       <button class="react-btn" data-key="useful" onclick="reactVote('useful', this)">
         <span class="react-ico">💼</span>
         <span class="react-lbl" id="r-lbl-3">Útil</span>
-        <span class="react-count" id="r-cnt-useful">…</span>
+        <span class="react-count" id="r-cnt-useful">0</span>
       </button>
       <button class="react-btn" data-key="recommend" onclick="reactVote('recommend', this)">
         <span class="react-ico">🚀</span>
         <span class="react-lbl" id="r-lbl-4">Recomendo</span>
-        <span class="react-count" id="r-cnt-recommend">…</span>
+        <span class="react-count" id="r-cnt-recommend">0</span>
       </button>
     </div>
     <div class="react-thanks" id="react-thanks"></div>
@@ -2122,20 +2122,47 @@ async function _incrementCount(k){
     return (j && typeof j.value === 'number') ? j.value : null;
   } catch(e){ return null; }
 }
-async function _loadAllCounts(){
+// Cache local — mostra o último valor conhecido IMEDIATAMENTE em vez de '…'.
+// O fetch real depois actualiza com valor fresco do servidor.
+function _cacheKey(k){ return 'gfp_cnt_' + k; }
+function _readCached(k){
+  try {
+    const v = parseInt(localStorage.getItem(_cacheKey(k)) || '', 10);
+    return isNaN(v) ? null : v;
+  } catch(e){ return null; }
+}
+function _writeCached(k, n){
+  try { localStorage.setItem(_cacheKey(k), String(n)); } catch(e){}
+}
+
+function _renderInitial(){
+  // Pinta imediatamente os contadores com valor de cache (ou '0' se nunca foi visto)
+  // — evita o '…' que parece estar partido.
   for(const k of REACT_KEYS){
     const el = document.getElementById('r-cnt-' + k);
     if(!el) continue;
-    const n = await _fetchCount(k);
-    // Anti-flicker: se fetch falha (n==null), manter '…' em vez de mostrar '0'
-    // — '0' real só aparece quando o servidor confirma value:0
-    if(n != null) el.textContent = _fmtCount(n);
-    // marcar como já votado (UI) se o utilizador votou nas últimas 24h
+    const cached = _readCached(k);
+    el.textContent = _fmtCount(cached != null ? cached : 0);
     if(_hasVotedRecently(k)){
       const btn = document.querySelector(`.react-btn[data-key="${k}"]`);
       if(btn) btn.classList.add('voted');
     }
   }
+}
+
+async function _loadAllCounts(){
+  // Paraleliza os 4 fetches em vez de sequencial — reduz latência total ~4x
+  const results = await Promise.all(REACT_KEYS.map(k => _fetchCount(k)));
+  REACT_KEYS.forEach((k, i) => {
+    const el = document.getElementById('r-cnt-' + k);
+    if(!el) return;
+    const n = results[i];
+    if(n != null){
+      el.textContent = _fmtCount(n);
+      _writeCached(k, n);
+    }
+    // se n==null, mantém o valor já pintado por _renderInitial() (cache ou 0)
+  });
 }
 async function reactVote(k, btn){
   if(btn.classList.contains('voted') || btn.classList.contains('disabled')) return;
@@ -2148,6 +2175,7 @@ async function reactVote(k, btn){
   const n = await _incrementCount(k);
   if(n != null){
     if(el) el.textContent = _fmtCount(n);
+    _writeCached(k, n);
     try { localStorage.setItem(_voteKey(k), String(Date.now())); } catch(e){}
     btn.classList.remove('disabled');
     btn.classList.add('voted');
@@ -2168,8 +2196,17 @@ async function reactVote(k, btn){
     btn.classList.add('voted');
   }
 }
-// carregar contadores ao abrir
-window.addEventListener('DOMContentLoaded', _loadAllCounts);
+// Pintar valor de cache assim que o DOM esteja pronto — sem esperar pelo fetch.
+// Depois disparar o fetch em background para actualizar com valor fresco.
+function _bootCounters(){
+  _renderInitial();           // mostra cache (ou 0) imediatamente — adeus '…'
+  _loadAllCounts();           // actualiza do servidor em segundo plano (paralelo)
+}
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', _bootCounters);
+} else {
+  _bootCounters();            // DOM já pronto — executar já
+}
 
 </script>
 </body>>
