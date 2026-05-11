@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>GesFacPress — Guia de Início Rápido</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --brand:   #1565c0;
+    --brand2:  #0d47a1;
+    --bg:      #f5f7fb;
+    --card:    #ffffff;
+    --muted:   #6b7280;
+    --success: #16a34a;
+    --warn:    #d97706;
+    --step-bg: #e3f2fd;
+  }
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; padding: 0;
+         background: var(--bg); color: #1e293b; line-height: 1.6; }
+
+  /* Header */
+  header {
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                url('logotipo.png') center/cover no-repeat, #1565c0;
+    color: #fff;
+    min-height: calc(100vh - 44px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 32px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 6px; font-size: 2rem; letter-spacing: -0.5px; }
+  header p  { margin: 0; opacity: .85; font-size: 1rem; }
+
+  /* Nav */
+  nav {
+    background: var(--card); padding: 10px 16px; text-align: center;
+    border-bottom: 2px solid #e5e7eb; position: sticky; top: 0; z-index: 20;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  nav a {
+    margin: 0 10px; text-decoration: none; color: var(--brand);
+    font-weight: 700; font-size: .95rem; padding: 4px 8px;
+    border-radius: 4px; transition: background .15s;
+  }
+  nav a:hover { background: var(--step-bg); }
+
+  .container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+
+  section {
+    background: var(--card); margin: 20px 0; padding: 28px 32px;
+    border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  h2 { color: var(--brand); margin-top: 0; font-size: 1.35rem; border-bottom: 2px solid var(--step-bg); padding-bottom: 8px; }
+  h3 { color: var(--brand2); margin: 24px 0 8px; font-size: 1.05rem; }
+  h4 { margin: 14px 0 6px; color: #374151; }
+  ul { margin: 8px 0 14px 20px; padding: 0; }
+  li { margin: 5px 0; }
+  code {
+    background: #f1f5f9; padding: 2px 7px; border-radius: 4px;
+    font-family: "Consolas", monospace; font-size: .9em; color: #0f172a;
+  }
+
+  /* Wizard steps */
+  .wizard-flow {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin: 18px 0; align-items: center;
+  }
+  .wstep {
+    background: var(--step-bg); border: 2px solid var(--brand);
+    border-radius: 10px; padding: 12px 16px; text-align: center;
+    min-width: 130px; flex: 1;
+  }
+  .wstep .icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+  .wstep .num  { font-size: .7rem; color: var(--brand); font-weight: 700; text-transform: uppercase; }
+  .wstep .lbl  { font-size: .9rem; font-weight: 700; color: #1e293b; }
+  .arrow { font-size: 1.3rem; color: var(--brand); flex: 0; }
+
+  /* Callout boxes */
+  .info  { background: #eff6ff; border-left: 4px solid var(--brand);  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+  .ok    { background: #f0fdf4; border-left: 4px solid var(--success); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+  .warn  { background: #fffbeb; border-left: 4px solid var(--warn);   padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+
+  .back { text-align: center; margin-top: 20px; }
+  .back a {
+    background: var(--brand); color: #fff; padding: 10px 22px;
+    text-decoration: none; border-radius: 8px; font-weight: 700;
+    display: inline-block; transition: background .15s;
+  }
+  .back a:hover { background: var(--brand2); }
+
+  footer { text-align: center; color: var(--muted); font-size: .88rem; padding: 20px 12px 32px; }
+
+  @media (max-width: 600px) {
+    header { padding: 32px 16px; }
+    section { padding: 20px 16px; }
+    .arrow { display: none; }
+    .wstep { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<a id="topo"></a>
+
+<header>
+  <h1>🖥️ GesFacPress</h1>
+  <p> Versão 2.0.0 · 2026</p>
+</header>
+
+<nav>
+  <a href="#pt">🇵🇹 Português</a>
+  <a href="#fr">🇫🇷 Français</a>
+  <a href="#en">🇬🇧 English</a>
+  <a href="#es">🇪🇸 Español</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════
+     PORTUGUÊS
+════════════════════════════════════════════════════════════ -->
+<section id="pt" lang="pt">
+  <h2>🇵🇹 Guia de Início Rápido — Português</h2>
+
+  <h3>1. INSTALAÇÃO</h3>
+  <ul>
+    <li>Faça duplo clique em <strong>Setup.exe</strong> e siga as instruções.</li>
+    <li>Se aparecer o controlo UAC, clique em <strong>"Sim"</strong>.</li>
+    <li>Pasta de instalação por omissão: <code>C:\GesFacPress</code></li>
+    <li>São criados atalhos no Ambiente de Trabalho e no Menu Iniciar.</li>
+  </ul>
+
+  <h3>2. PRIMEIRO ARRANQUE — ASSISTENTE DE CONFIGURAÇÃO</h3>
+
+  <p>Na primeira vez que a aplicação abre, aparece automaticamente um <strong>Assistente de Configuração</strong> que o guia em 3 passos simples:</p>
+
+  <div class="wizard-flow">
+    <div class="wstep">
+      <span class="icon">🌐</span>
+      <span class="num">Passo 1</span>
+      <span class="lbl">Língua</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">👤</span>
+      <span class="num">Passo 2</span>
+      <span class="lbl">Criar utilizador</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">🔑</span>
+      <span class="num">Passo 3</span>
+      <span class="lbl">Licença</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep" style="border-color:var(--success);background:#f0fdf4;">
+      <span class="icon">✅</span>
+      <span class="num">Concluído</span>
+      <span class="lbl">Entrar na APP</span>
+    </div>
+  </div>
+
+  <h4>Passo 1 — Escolher a Língua</h4>
+  <ul>
+    <li>Clique na bandeira do idioma que pretende usar: 🇵🇹 Português, 🇫🇷 Français, 🇬🇧 English ou 🇪🇸 Español.</li>
+    <li>Toda a aplicação fica imediatamente no idioma escolhido.</li>
+    <li>Clique em <strong>"Seguinte ▶"</strong>.</li>
+  </ul>
+
+  <h4>Passo 2 — Criar o seu Utilizador</h4>
+  <ul>
+    <li>Preencha o <strong>nome completo</strong>, o <strong>nome de login</strong> e a <strong>password</strong> (mínimo 6 caracteres).</li>
+    <li>Este será o utilizador principal com todas as permissões.</li>
+    <li>Poderá criar utilizadores adicionais depois em <em>Configurações → Utilizadores</em>.</li>
+    <li>Clique em <strong>"Seguinte ▶"</strong>.</li>
+  </ul>
+
+  <div class="warn">
+    ⚠️ <strong>Guarde bem a password.</strong> Não existe recuperação automática — em caso de perda, contacte o suporte.
+  </div>
+
+  <h4>Passo 3 — Licença</h4>
+  <p>O GesFacPress activa automaticamente uma <strong>licença de ensaio gratuita de 30 dias</strong> com acesso completo a todas as funcionalidades (Vendas, Stocks, Compras, SAF-T, Factur-X, análises).</p>
+  <ul>
+    <li><strong>Para começar de imediato:</strong> aceite o ensaio gratuito e a aplicação abre directamente no Dashboard.</li>
+    <li><strong>Já tem uma licença comercial?</strong> Clique em <strong>📂</strong> para seleccionar o ficheiro <code>licenca_XXXX.dat</code> e depois em <strong>"🔍 Ler Licença"</strong> para validar (são mostrados o nome do cliente, validade e dias restantes). Confirme com <strong>"✔ Activar e Entrar"</strong>.</li>
+  </ul>
+
+  <div class="ok">
+    ✅ Pronto a trabalhar! Nos últimos 10 dias do ensaio, será mostrado um aviso no topo. Contacte <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a> para escolher um plano comercial (Base · Standard · Profissional · Por Medida).
+  </div>
+
+  <div class="info">
+    📌 Nas entradas seguintes, a aplicação pede apenas o <strong>utilizador e password</strong> — o Assistente não volta a aparecer.
+  </div>
+
+  <h3>3. CONFIGURAÇÃO INICIAL RECOMENDADA</h3>
+
+  <h4>3.1 Dados da Empresa</h4>
+  <ul>
+    <li>Menu: <em>Configurações → Dados da Empresa</em></li>
+    <li>Preencher: Nome, NIF, Morada, Contactos, Logótipo (opcional, 200×200 px).</li>
+  </ul>
+
+  <h4>3.2 Numeração de Documentos</h4>
+  <ul>
+    <li>Menu: <em>Configurações → Opções → Numeração</em></li>
+    <li>Configurar prefixo e série inicial para Faturas, Orçamentos e Recibos.</li>
+  </ul>
+
+  <h4>3.3 Artigos e Clientes</h4>
+  <ul>
+    <li>Menu: <em>Artigos</em> — criar catálogo de produtos/serviços com preços e taxas de IVA.</li>
+    <li>Menu: <em>Clientes</em> — adicionar os clientes com dados fiscais.</li>
+  </ul>
+
+  <h4>3.4 Backup Automático</h4>
+  <ul>
+    <li>Menu: <em>Configurações → Backup</em></li>
+    <li>Activar backup diário e escolher pasta de destino (ex.: C:\Gesfacpress\backups).</li>
+  </ul>
+
+  <h3>4. SUPORTE TÉCNICO</h3>
+  <ul>
+    <li>📧 Email: <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a></li>
+    <li>📞 / 📱 WhatsApp: +33 7 50 37 88 21</li>
+  </ul>
+
+  <div class="back"><a href="#topo">⬆️ Voltar ao Início</a></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FRANÇAIS
+════════════════════════════════════════════════════════════ -->
+<section id="fr" lang="fr">
+  <h2>🇫🇷 Guide de Démarrage Rapide — Français</h2>
+
+  <h3>1. INSTALLATION</h3>
+  <ul>
+    <li>Double-cliquez sur <strong>Setup.exe</strong> et suivez les instructions.</li>
+    <li>Si le contrôle UAC apparaît, cliquez sur <strong>"Oui"</strong>.</li>
+    <li>Dossier d'installation par défaut : <code>C:\GesFacPress</code></li>
+    <li>Des raccourcis sont créés sur le Bureau et dans le Menu Démarrer.</li>
+  </ul>
+
+  <h3>2. PREMIER DÉMARRAGE — ASSISTANT DE CONFIGURATION</h3>
+
+  <p>Au premier lancement, un <strong>Assistant de Configuration</strong> s'ouvre automatiquement en 3 étapes simples :</p>
+
+  <div class="wizard-flow">
+    <div class="wstep">
+      <span class="icon">🌐</span>
+      <span class="num">Étape 1</span>
+      <span class="lbl">Langue</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">👤</span>
+      <span class="num">Étape 2</span>
+      <span class="lbl">Créer un compte</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">🔑</span>
+      <span class="num">Étape 3</span>
+      <span class="lbl">Licence</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep" style="border-color:var(--success);background:#f0fdf4;">
+      <span class="icon">✅</span>
+      <span class="num">Terminé</span>
+      <span class="lbl">Accéder à l'app</span>
+    </div>
+  </div>
+
+  <h4>Étape 1 — Choisir la langue</h4>
+  <ul>
+    <li>Cliquez sur le drapeau de la langue souhaitée : 🇵🇹 Português, 🇫🇷 Français, 🇬🇧 English ou 🇪🇸 Español.</li>
+    <li>Toute l'application bascule immédiatement dans la langue choisie.</li>
+    <li>Cliquez sur <strong>"Suivant ▶"</strong>.</li>
+  </ul>
+
+  <h4>Étape 2 — Créer votre compte utilisateur</h4>
+  <ul>
+    <li>Renseignez votre <strong>nom complet</strong>, votre <strong>identifiant de connexion</strong> et votre <strong>mot de passe</strong> (6 caractères minimum).</li>
+    <li>Ce compte principal disposera de toutes les permissions.</li>
+    <li>Vous pourrez créer d'autres utilisateurs dans <em>Paramètres → Utilisateurs</em>.</li>
+    <li>Cliquez sur <strong>"Suivant ▶"</strong>.</li>
+  </ul>
+
+  <div class="warn">
+    ⚠️ <strong>Conservez votre mot de passe en lieu sûr.</strong> Il n'existe pas de récupération automatique — en cas de perte, contactez le support.
+  </div>
+
+  <h4>Étape 3 — Licence</h4>
+  <p>GesFacPress active automatiquement une <strong>licence d'essai gratuite de 30 jours</strong> avec accès complet à toutes les fonctionnalités (Ventes, Stocks, Achats, Factur-X, URSSAF, analyses).</p>
+  <ul>
+    <li><strong>Pour commencer immédiatement :</strong> acceptez l'essai gratuit et l'application s'ouvre directement sur le Tableau de bord.</li>
+    <li><strong>Vous avez déjà une licence commerciale ?</strong> Cliquez sur <strong>📂</strong> pour sélectionner le fichier <code>licenca_XXXX.dat</code> puis sur <strong>"🔍 Lire Licence"</strong> pour valider (le nom du client, la date d'expiration et les jours restants s'affichent). Confirmez avec <strong>"✔ Activer et Entrer"</strong>.</li>
+  </ul>
+
+  <div class="ok">
+    ✅ Prêt à travailler ! Durant les 10 derniers jours de l'essai, un avertissement apparaît en haut. Contactez <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a> pour choisir un plan commercial (Base · Standard · Professionnel · Sur Mesure).
+  </div>
+
+  <div class="info">
+    📌 Lors des prochaines ouvertures, l'application demande uniquement votre <strong>identifiant et mot de passe</strong> — l'Assistant ne réapparaît plus.
+  </div>
+
+  <h3>3. CONFIGURATION INITIALE RECOMMANDÉE</h3>
+
+  <h4>3.1 Données de l'entreprise</h4>
+  <ul>
+    <li>Menu : <em>Paramètres → Données de l'entreprise</em></li>
+    <li>Renseigner : Nom, Numéro fiscal, Adresse, Contacts, Logo (optionnel, 200×200 px).</li>
+  </ul>
+
+  <h4>3.2 Numérotation des documents</h4>
+  <ul>
+    <li>Menu : <em>Paramètres → Options → Numérotation</em></li>
+    <li>Configurer le préfixe et la série initiale pour les Factures, Devis et Reçus.</li>
+  </ul>
+
+  <h4>3.3 Articles et Clients</h4>
+  <ul>
+    <li>Menu : <em>Articles</em> — créer le catalogue produits/services avec prix et taux de TVA.</li>
+    <li>Menu : <em>Clients</em> — ajouter les clients avec données fiscales.</li>
+  </ul>
+
+  <h4>3.4 Sauvegarde automatique</h4>
+  <ul>
+    <li>Menu : <em>Paramètres → Sauvegarde</em></li>
+    <li>Activer la sauvegarde quotidienne et choisir le dossier de destination (ex. : C:\Gesfacpress\backups).</li>
+  </ul>
+
+  <h3>4. SUPPORT TECHNIQUE</h3>
+  <ul>
+    <li>📧 Email : <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a></li>
+    <li>📞 / 📱 WhatsApp : +33 7 50 37 88 21</li>
+  </ul>
+
+  <div class="back"><a href="#topo">⬆️ Retour en haut</a></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     ENGLISH
+════════════════════════════════════════════════════════════ -->
+<section id="en" lang="en">
+  <h2>🇬🇧 Quick Start Guide — English</h2>
+
+  <h3>1. INSTALLATION</h3>
+  <ul>
+    <li>Double-click <strong>Setup.exe</strong> and follow the on-screen instructions.</li>
+    <li>If the UAC prompt appears, click <strong>"Yes"</strong>.</li>
+    <li>Default installation folder: <code>C:\GesFacPress</code></li>
+    <li>Shortcuts are created on the Desktop and in the Start Menu.</li>
+  </ul>
+
+  <h3>2. FIRST LAUNCH — SETUP WIZARD</h3>
+
+  <p>The first time the application opens, a <strong>Setup Wizard</strong> launches automatically, guiding you through 3 simple steps:</p>
+
+  <div class="wizard-flow">
+    <div class="wstep">
+      <span class="icon">🌐</span>
+      <span class="num">Step 1</span>
+      <span class="lbl">Language</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">👤</span>
+      <span class="num">Step 2</span>
+      <span class="lbl">Create account</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">🔑</span>
+      <span class="num">Step 3</span>
+      <span class="lbl">License</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep" style="border-color:var(--success);background:#f0fdf4;">
+      <span class="icon">✅</span>
+      <span class="num">Done</span>
+      <span class="lbl">Enter the app</span>
+    </div>
+  </div>
+
+  <h4>Step 1 — Choose your language</h4>
+  <ul>
+    <li>Click the flag for your language: 🇵🇹 Português, 🇫🇷 Français, 🇬🇧 English or 🇪🇸 Español.</li>
+    <li>The entire application switches to the selected language immediately.</li>
+    <li>Click <strong>"Next ▶"</strong>.</li>
+  </ul>
+
+  <h4>Step 2 — Create your user account</h4>
+  <ul>
+    <li>Enter your <strong>full name</strong>, a <strong>login username</strong> and a <strong>password</strong> (minimum 6 characters).</li>
+    <li>This main account will have full permissions.</li>
+    <li>Additional users can be created later in <em>Settings → Users</em>.</li>
+    <li>Click <strong>"Next ▶"</strong>.</li>
+  </ul>
+
+  <div class="warn">
+    ⚠️ <strong>Keep your password safe.</strong> There is no automatic recovery — if lost, contact support.
+  </div>
+
+  <h4>Step 3 — Licence</h4>
+  <p>GesFacPress automatically activates a <strong>30-day free trial licence</strong> with full access to every feature (Sales, Stock, Purchases, SAF-T, Factur-X, analytics).</p>
+  <ul>
+    <li><strong>To start right away:</strong> accept the free trial and the application opens directly on the Dashboard.</li>
+    <li><strong>Already have a commercial licence?</strong> Click <strong>📂</strong> to pick the <code>licenca_XXXX.dat</code> file, then <strong>"🔍 Read Licence"</strong> to validate it (the client name, expiry date and days remaining are displayed). Confirm with <strong>"✔ Activate and Enter"</strong>.</li>
+  </ul>
+
+  <div class="ok">
+    ✅ Ready to work! During the last 10 days of the trial a warning is shown at the top. Contact <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a> to choose a commercial plan (Base · Standard · Professional · Custom).
+  </div>
+
+  <div class="info">
+    📌 On subsequent logins, the application asks only for your <strong>username and password</strong> — the Wizard does not appear again.
+  </div>
+
+  <h3>3. RECOMMENDED INITIAL SETUP</h3>
+
+  <h4>3.1 Company Data</h4>
+  <ul>
+    <li>Menu: <em>Settings → Company Data</em></li>
+    <li>Fill in: Name, Tax Number, Address, Contacts, Logo (optional, 200×200 px).</li>
+  </ul>
+
+  <h4>3.2 Document Numbering</h4>
+  <ul>
+    <li>Menu: <em>Settings → Options → Numbering</em></li>
+    <li>Set prefix and starting series for Invoices, Quotes and Receipts.</li>
+  </ul>
+
+  <h4>3.3 Items and Customers</h4>
+  <ul>
+    <li>Menu: <em>Items</em> — create your product/service catalogue with prices and VAT rates.</li>
+    <li>Menu: <em>Customers</em> — add customers with their tax details.</li>
+  </ul>
+
+  <h4>3.4 Automatic Backup</h4>
+  <ul>
+    <li>Menu: <em>Settings → Backup</em></li>
+    <li>Enable daily automatic backup and choose a destination folder (e.g. C:\Gesfacpress\backups).</li>
+  </ul>
+
+  <h3>4. TECHNICAL SUPPORT</h3>
+  <ul>
+    <li>📧 Email: <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a></li>
+    <li>📞 / 📱 WhatsApp: +33 7 50 37 88 21</li>
+  </ul>
+
+  <div class="back"><a href="#topo">⬆️ Back to Top</a></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     ESPAÑOL
+════════════════════════════════════════════════════════════ -->
+<section id="es" lang="es">
+  <h2>🇪🇸 Guía de Inicio Rápido — Español</h2>
+
+  <h3>1. INSTALACIÓN</h3>
+  <ul>
+    <li>Haga doble clic en <strong>Setup.exe</strong> y siga las instrucciones en pantalla.</li>
+    <li>Si aparece el control UAC, haga clic en <strong>"Sí"</strong>.</li>
+    <li>Carpeta de instalación por defecto: <code>C:\GesFacPress</code></li>
+    <li>Se crean accesos directos en el Escritorio y en el Menú Inicio.</li>
+  </ul>
+
+  <h3>2. PRIMER ARRANQUE — ASISTENTE DE CONFIGURACIÓN</h3>
+
+  <p>La primera vez que se abre la aplicación, aparece automáticamente un <strong>Asistente de Configuración</strong> que le guía en 3 sencillos pasos:</p>
+
+  <div class="wizard-flow">
+    <div class="wstep">
+      <span class="icon">🌐</span>
+      <span class="num">Paso 1</span>
+      <span class="lbl">Idioma</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">👤</span>
+      <span class="num">Paso 2</span>
+      <span class="lbl">Crear usuario</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep">
+      <span class="icon">🔑</span>
+      <span class="num">Paso 3</span>
+      <span class="lbl">Licencia</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="wstep" style="border-color:var(--success);background:#f0fdf4;">
+      <span class="icon">✅</span>
+      <span class="num">Completado</span>
+      <span class="lbl">Entrar en la app</span>
+    </div>
+  </div>
+
+  <h4>Paso 1 — Elegir el idioma</h4>
+  <ul>
+    <li>Haga clic en la bandera del idioma deseado: 🇵🇹 Português, 🇫🇷 Français, 🇬🇧 English o 🇪🇸 Español.</li>
+    <li>Toda la aplicación cambia inmediatamente al idioma seleccionado.</li>
+    <li>Haga clic en <strong>"Siguiente ▶"</strong>.</li>
+  </ul>
+
+  <h4>Paso 2 — Crear su cuenta de usuario</h4>
+  <ul>
+    <li>Introduzca su <strong>nombre completo</strong>, un <strong>nombre de usuario</strong> y una <strong>contraseña</strong> (mínimo 6 caracteres).</li>
+    <li>Esta cuenta principal tendrá todos los permisos.</li>
+    <li>Podrá crear usuarios adicionales en <em>Configuración → Usuarios</em>.</li>
+    <li>Haga clic en <strong>"Siguiente ▶"</strong>.</li>
+  </ul>
+
+  <div class="warn">
+    ⚠️ <strong>Guarde bien su contraseña.</strong> No hay recuperación automática — en caso de pérdida, contacte con el soporte.
+  </div>
+
+  <h4>Paso 3 — Licencia</h4>
+  <p>GesFacPress activa automáticamente una <strong>licencia de prueba gratuita de 30 días</strong> con acceso completo a todas las funcionalidades (Ventas, Stocks, Compras, SAF-T, Factur-X, análisis).</p>
+  <ul>
+    <li><strong>Para empezar de inmediato:</strong> acepte la prueba gratuita y la aplicación se abre directamente en el Panel de control.</li>
+    <li><strong>¿Ya tiene una licencia comercial?</strong> Haga clic en <strong>📂</strong> para seleccionar el archivo <code>licenca_XXXX.dat</code> y luego en <strong>"🔍 Leer Licencia"</strong> para validarlo (se muestran el nombre del cliente, la fecha de vencimiento y los días restantes). Confirme con <strong>"✔ Activar y Entrar"</strong>.</li>
+  </ul>
+
+  <div class="ok">
+    ✅ ¡Listo para trabajar! Durante los últimos 10 días de la prueba se muestra un aviso en la parte superior. Contacte con <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a> para elegir un plan comercial (Base · Standard · Profesional · A Medida).
+  </div>
+
+  <div class="info">
+    📌 En los siguientes inicios, la aplicación solo pide su <strong>usuario y contraseña</strong> — el Asistente no vuelve a aparecer.
+  </div>
+
+  <h3>3. CONFIGURACIÓN INICIAL RECOMENDADA</h3>
+
+  <h4>3.1 Datos de la empresa</h4>
+  <ul>
+    <li>Menú: <em>Configuración → Datos de la empresa</em></li>
+    <li>Rellenar: Nombre, NIF, Dirección, Contactos, Logotipo (opcional, 200×200 px).</li>
+  </ul>
+
+  <h4>3.2 Numeración de documentos</h4>
+  <ul>
+    <li>Menú: <em>Configuración → Opciones → Numeración</em></li>
+    <li>Configurar prefijo y serie inicial para Facturas, Presupuestos y Recibos.</li>
+  </ul>
+
+  <h4>3.3 Artículos y Clientes</h4>
+  <ul>
+    <li>Menú: <em>Artículos</em> — crear catálogo de productos/servicios con precios y tipos de IVA.</li>
+    <li>Menú: <em>Clientes</em> — añadir clientes con sus datos fiscales.</li>
+  </ul>
+
+  <h4>3.4 Copia de seguridad automática</h4>
+  <ul>
+    <li>Menú: <em>Configuración → Copia de seguridad</em></li>
+    <li>Activar la copia diaria automática y elegir carpeta de destino (ej.: C:\Gesfacpress\backups).</li>
+  </ul>
+
+  <h3>4. SOPORTE TÉCNICO</h3>
+  <ul>
+    <li>📧 Email: <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a></li>
+    <li>📞 / 📱 WhatsApp: +33 7 50 37 88 21</li>
+  </ul>
+
+  <div class="back"><a href="#topo">⬆️ Volver al inicio</a></div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  GesFacPress v2.0.0 · 2026 · <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a>
+</footer>
+
+</body>
+</html>

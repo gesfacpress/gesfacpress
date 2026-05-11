@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GesFacPress — Funcionalidades / Fonctionnalités</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#2563eb;--blue-d:#1e40af;--blue-l:#dbeafe;
+  --teal:#0d9488;--teal-l:#ccfbf1;
+  --purple:#7c3aed;--purp-l:#ede9fe;
+  --orange:#ea580c;--ora-l:#ffedd5;
+  --green:#16a34a;--grn-l:#dcfce7;
+  --red:#dc2626;--red-l:#fee2e2;
+  --dark:#0f172a;--mid:#334155;--muted:#64748b;
+  --white:#fff;--surf:#f8fafc;
+}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--dark);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  background:linear-gradient(160deg,#dbeafe 0%,#e0f2fe 20%,#f0fdf4 50%,#faf5ff 80%,#ede9fe 100%);
+  background-attachment:fixed;min-height:100vh;line-height:1.5}
+
+.wrap{max-width:1180px;margin:0 auto;padding:48px 28px}
+
+/* HEADER */
+.hero{text-align:center;margin-bottom:40px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.15;
+  background:linear-gradient(135deg,#1e3a8a,#2563eb,#0891b2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hero p{font-size:16px;color:var(--mid);max-width:740px;margin:0 auto}
+.hero-flags{margin-top:14px;font-size:14px;color:var(--muted)}
+.hero-flags span{display:inline-block;padding:4px 12px;border-radius:14px;
+  background:rgba(255,255,255,0.7);margin:0 4px;font-weight:600}
+
+/* LANG TOGGLE */
+.lang-bar{display:flex;justify-content:center;gap:6px;margin-bottom:32px}
+.lang-btn{padding:8px 18px;border-radius:22px;border:2px solid transparent;cursor:pointer;
+  font-size:13px;font-weight:700;background:rgba(255,255,255,0.7);color:var(--muted);
+  font-family:inherit;transition:all .2s}
+.lang-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);
+  box-shadow:0 4px 12px rgba(37,99,235,.3)}
+.lang-btn:hover:not(.active){background:#fff;color:var(--blue)}
+
+/* SECTION GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;margin-bottom:32px}
+.card{background:#fff;border-radius:14px;padding:22px;
+  box-shadow:0 6px 22px rgba(15,23,42,.06);
+  border:1px solid rgba(15,23,42,.04);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(15,23,42,.1)}
+.card h2{font-size:17px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.card h2 .ico{font-size:22px}
+.card ul{list-style:none}
+.card li{padding:5px 0 5px 18px;position:relative;font-size:13.5px;color:var(--mid);line-height:1.55}
+.card li::before{content:"›";position:absolute;left:4px;top:5px;color:var(--blue);font-weight:800}
+.card li b{color:var(--dark);font-weight:700}
+
+/* COLOR THEMES */
+.t-sales h2 .ico{color:var(--blue)}
+.t-stock h2 .ico{color:var(--green)}
+.t-buy h2 .ico{color:var(--purple)}
+.t-rep h2 .ico{color:var(--orange)}
+.t-pt h2{color:var(--red)}
+.t-fr h2{color:#1e40af}
+.t-perm h2 .ico{color:var(--teal)}
+.t-out h2 .ico{color:var(--orange)}
+.t-lang h2 .ico{color:var(--purple)}
+.t-biz h2{color:var(--green)}
+.t-off h2 .ico{color:var(--mid)}
+
+.t-pt{border-left:4px solid var(--red)}
+.t-fr{border-left:4px solid #1e40af}
+.t-biz{border-left:4px solid var(--green)}
+
+/* FOOTER */
+.foot{text-align:center;color:var(--muted);font-size:13px;padding:24px 0;border-top:1px solid rgba(15,23,42,.08)}
+.foot strong{color:var(--dark)}
+
+@media(max-width:600px){
+  .wrap{padding:28px 16px}
+  .grid{grid-template-columns:1fr}
+}
+
+/* PRINT */
+@media print{
+  body{background:#fff}
+  .wrap{padding:18px}
+  .lang-bar,.foot a{display:none}
+  .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid;page-break-inside:avoid}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .lang-section{display:block !important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <h1>GesFacPress</h1>
+  <p id="hero-sub">Software de gestão e facturação para PME — 100% offline, multilingue, conforme a regulamentação fiscal portuguesa e francesa.</p>
+  <div class="hero-flags">
+    <span>🇵🇹 PT</span><span>🇫🇷 FR</span><span>🇬🇧 EN</span><span>🇪🇸 ES</span>
+  </div>
+</div>
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('pt')">🇵🇹 Português</button>
+  <button class="lang-btn" onclick="setLang('fr')">🇫🇷 Français</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PORTUGUÊS                                                     -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="lang-section" id="sec-pt">
+
+<div class="grid">
+
+<div class="card t-sales">
+  <h2><span class="ico">💼</span> Gestão de Vendas</h2>
+  <ul>
+    <li>Documentos: Faturas (<b>FT</b>), Orçamentos (<b>OR</b>), Recibos (<b>RC</b>), Notas de Crédito (<b>NC</b>), Notas de Débito (<b>ND</b>)</li>
+    <li>Clientes com NIF/VAT intracom., morada de entrega, condições de pagamento, idioma para PDF</li>
+    <li>Numeração legal: <b>prefixo + ano + sequencial</b> (FT2026/0001)</li>
+    <li>Conversão directa: Orçamento → Fatura → Recibo (sem reescrever)</li>
+    <li>Cartas de cobrança automáticas em 3 níveis</li>
+    <li>Extrato de cliente com saldos e movimentos</li>
+  </ul>
+</div>
+
+<div class="card t-stock">
+  <h2><span class="ico">📦</span> Gestão de Stocks</h2>
+  <ul>
+    <li>Artigos com categorias, unidades, IVA, margem, <b>CMP automático</b></li>
+    <li>Múltiplos armazéns independentes</li>
+    <li>Movimentos: Entradas (ES), Saídas (SS), Transferências (TA), Ajustes (AJ), Inventário (IF)</li>
+    <li>Inventário físico com correção automática</li>
+    <li>Alertas de stock mínimo por email</li>
+    <li>Extrato de artigo com decomposição CMP</li>
+  </ul>
+</div>
+
+<div class="card t-buy">
+  <h2><span class="ico">🛒</span> Gestão de Compras</h2>
+  <ul>
+    <li>Fornecedores com SIREN/SIRET (FR) e condições</li>
+    <li>Faturas de Compra (<b>FC</b>) com entrada de stock automática</li>
+    <li>Notas de Crédito de Fornecedor (<b>NCF</b>) com estorno de stock</li>
+    <li>Pagamentos (<b>PG</b>) multi-fatura, gestão de cheques</li>
+    <li>Análises: Saldo por Fornecedor, IVA Dedutível, Top Artigos, Evolução</li>
+  </ul>
+</div>
+
+<div class="card t-rep">
+  <h2><span class="ico">📊</span> Análises e Relatórios</h2>
+  <ul>
+    <li>Dashboard executivo com gráficos: faturação, cobrança, progressão</li>
+    <li>Análise IVA mensal por taxa</li>
+    <li>Apuramento IVA: Vendas vs Compras</li>
+    <li>Listagens, consultas avançadas, export CSV/PDF</li>
+    <li>Relatórios anuais, financeiros, top artigos</li>
+  </ul>
+</div>
+
+<div class="card t-pt">
+  <h2>🇵🇹 Conformidade Fiscal Portugal</h2>
+  <ul>
+    <li><b>SAF-T PT</b> v1.04_01 com hashing encadeado</li>
+    <li><b>QR Code AT</b> (Portaria 195/2020) em faturas</li>
+    <li><b>ATCUD</b> por série/ano</li>
+    <li>Certificação AT configurável pelo admin</li>
+    <li>Tabela IVA: 23%, 13%, 6%, 0%</li>
+  </ul>
+</div>
+
+<div class="card t-fr">
+  <h2>🇫🇷 Conformidade Fiscal França</h2>
+  <ul>
+    <li><b>Factur-X EN 16931</b> (XML CII embebido em PDF)</li>
+    <li>Compatível com <b>Chorus Pro</b> e ePrior</li>
+    <li>Análise TVA / Apuramento</li>
+    <li>Declaração URSSAF (micro-entrepreneur)</li>
+    <li>SIREN, SIRET, TVA intracom, regime micro</li>
+  </ul>
+</div>
+
+<div class="card t-perm">
+  <h2><span class="ico">🔐</span> Utilizadores e Permissões</h2>
+  <ul>
+    <li>4 roles: <b>Administrador, Gestor, Operador, Readonly</b></li>
+    <li>Permissões granulares (view/add/edit/cancel)</li>
+    <li>Audit log completo (quem, quando, o quê)</li>
+    <li>Painel Admin para séries, prefixos, códigos AT</li>
+  </ul>
+</div>
+
+<div class="card t-out">
+  <h2><span class="ico">🖨️</span> Outputs e Impressão</h2>
+  <ul>
+    <li>PDF via Edge headless (sem dependências externas)</li>
+    <li>Impressão directa Windows: GDI nativo (PyMuPDF + pywin32)</li>
+    <li>CSV UTF-8 BOM compatível Excel PT</li>
+    <li>Email SMTP com TLS e anti-spam</li>
+    <li>AnyDesk integrado para suporte remoto</li>
+  </ul>
+</div>
+
+<div class="card t-lang">
+  <h2><span class="ico">🌐</span> Multi-língua</h2>
+  <ul>
+    <li>Interface em <b>4 idiomas:</b> PT, FR, EN, ES</li>
+    <li>PDFs gerados na língua do cliente (não da UI)</li>
+    <li>Prefixos legais adaptados (NC→AV, NCF→AVF, ND→DN em FR)</li>
+    <li>Documentos cumpridores do uso comercial local</li>
+  </ul>
+</div>
+
+<div class="card t-biz">
+  <h2>💎 Modelo Comercial</h2>
+  <ul>
+    <li><b>Trial 30 dias</b> automático ao primeiro arranque</li>
+    <li>Banner de aviso nos últimos 10 dias</li>
+    <li>4 planos: <b>Base, Standard, Profissional, Por Medida</b></li>
+    <li>Features bloqueadas mostram 🔒 com upgrade a 1 clique</li>
+    <li>Licença offline assinada (HMAC), sem internet obrigatória</li>
+  </ul>
+</div>
+
+<div class="card t-off">
+  <h2><span class="ico">💾</span> Operação 100% Offline</h2>
+  <ul>
+    <li>SQLite local com WAL (sem servidor)</li>
+    <li>Backups automáticos configuráveis (mantém últimos 30)</li>
+    <li>Sem internet necessária (excepto email)</li>
+    <li>Fallback <code>%APPDATA%</code> se C:\ for read-only</li>
+    <li>Compatível Windows 10/11 (com Microsoft Edge)</li>
+  </ul>
+</div>
+
+</div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- FRANÇAIS                                                      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="lang-section" id="sec-fr" style="display:none">
+
+<div class="grid">
+
+<div class="card t-sales">
+  <h2><span class="ico">💼</span> Gestion des Ventes</h2>
+  <ul>
+    <li>Documents : Factures (<b>FT</b>), Devis (<b>OR</b>), Reçus (<b>RC</b>), Avoirs (<b>AV</b>)</li>
+    <li>Clients avec TVA intracom., adresse de livraison, conditions de paiement, langue PDF</li>
+    <li>Numérotation légale : <b>préfixe + année + séquentiel</b> (FT2026/0001)</li>
+    <li>Conversion directe : Devis → Facture → Reçu (sans ressaisie)</li>
+    <li>Lettres de relance automatiques sur 3 niveaux</li>
+    <li>Relevé client avec soldes et mouvements</li>
+  </ul>
+</div>
+
+<div class="card t-stock">
+  <h2><span class="ico">📦</span> Gestion des Stocks</h2>
+  <ul>
+    <li>Articles avec catégories, unités, TVA, marge, <b>CMP automatique</b></li>
+    <li>Multi-entrepôts indépendants</li>
+    <li>Mouvements : Entrées (ES), Sorties (SS), Transferts (TA), Ajustements (AJ), Inventaire (IF)</li>
+    <li>Inventaire physique avec correction automatique</li>
+    <li>Alertes de stock minimum par e-mail</li>
+    <li>Relevé d'article avec décomposition CMP</li>
+  </ul>
+</div>
+
+<div class="card t-buy">
+  <h2><span class="ico">🛒</span> Gestion des Achats</h2>
+  <ul>
+    <li>Fournisseurs avec SIREN/SIRET et conditions</li>
+    <li>Factures Fournisseur (<b>FC</b>) avec entrée de stock automatique</li>
+    <li>Avoirs Fournisseur (<b>AVF</b>) avec ajustement de stock</li>
+    <li>Paiements (<b>PG</b>) multi-factures, gestion de chèques</li>
+    <li>Analyses : Solde Fournisseur, TVA Déductible, Top Articles, Évolution</li>
+  </ul>
+</div>
+
+<div class="card t-rep">
+  <h2><span class="ico">📊</span> Analyses et Rapports</h2>
+  <ul>
+    <li>Tableau de bord exécutif avec graphiques : CA, recouvrement, progression</li>
+    <li>Analyse TVA mensuelle par taux</li>
+    <li>Déclaration TVA : Ventes vs Achats</li>
+    <li>Listings, requêtes avancées, export CSV/PDF</li>
+    <li>Rapports annuels, financiers, top articles</li>
+  </ul>
+</div>
+
+<div class="card t-fr">
+  <h2>🇫🇷 Conformité Fiscale France</h2>
+  <ul>
+    <li><b>Factur-X EN 16931</b> (XML CII intégré au PDF)</li>
+    <li>Compatible <b>Chorus Pro</b> et ePrior</li>
+    <li>Analyse TVA / Déclaration TVA</li>
+    <li>URSSAF pour micro-entrepreneur</li>
+    <li>SIREN, SIRET, TVA intracom, régime micro</li>
+    <li>Cycle commercial respecté (pas de Note de Débit)</li>
+  </ul>
+</div>
+
+<div class="card t-pt">
+  <h2>🇵🇹 Conformité Fiscale Portugal <span style="font-size:11px;color:#94a3b8;font-weight:500">(si entreprise PT)</span></h2>
+  <ul>
+    <li><b>SAF-T PT</b> v1.04_01 avec chaînage de hash</li>
+    <li><b>QR Code AT</b> (Portaria 195/2020) sur factures</li>
+    <li><b>ATCUD</b> par série/année</li>
+    <li>Numéro de certification AT configurable</li>
+    <li>Taux de TVA PT : 23 %, 13 %, 6 %, 0 %</li>
+  </ul>
+</div>
+
+<div class="card t-perm">
+  <h2><span class="ico">🔐</span> Utilisateurs et Permissions</h2>
+  <ul>
+    <li>4 rôles : <b>Administrateur, Gestionnaire, Opérateur, Lecture seule</b></li>
+    <li>Permissions granulaires (consulter/ajouter/modifier/annuler)</li>
+    <li>Journal d'audit complet (qui, quand, quoi)</li>
+    <li>Panneau Admin pour séries, préfixes, codes</li>
+  </ul>
+</div>
+
+<div class="card t-out">
+  <h2><span class="ico">🖨️</span> Sorties et Impression</h2>
+  <ul>
+    <li>PDF via Edge headless (sans dépendances externes)</li>
+    <li>Impression directe Windows : GDI natif (PyMuPDF + pywin32)</li>
+    <li>CSV UTF-8 BOM compatible Excel</li>
+    <li>E-mail SMTP avec TLS et anti-spam</li>
+    <li>AnyDesk intégré pour support à distance</li>
+  </ul>
+</div>
+
+<div class="card t-lang">
+  <h2><span class="ico">🌐</span> Multilingue</h2>
+  <ul>
+    <li>Interface en <b>4 langues :</b> PT, FR, EN, ES</li>
+    <li>PDF générés dans la langue du client (pas de l'UI)</li>
+    <li>Préfixes légaux adaptés (FR : Avoir = AV, AVF, etc.)</li>
+    <li>Documents conformes à l'usage commercial local</li>
+  </ul>
+</div>
+
+<div class="card t-biz">
+  <h2>💎 Modèle Commercial</h2>
+  <ul>
+    <li><b>Essai 30 jours</b> automatique au premier lancement</li>
+    <li>Bannière d'alerte les 10 derniers jours</li>
+    <li>4 plans : <b>Base, Standard, Professionnel, Sur Mesure</b></li>
+    <li>Fonctionnalités verrouillées affichent 🔒 avec mise à niveau en un clic</li>
+    <li>Licence hors ligne signée (HMAC), pas besoin d'Internet</li>
+  </ul>
+</div>
+
+<div class="card t-off">
+  <h2><span class="ico">💾</span> Fonctionnement 100 % Hors Ligne</h2>
+  <ul>
+    <li>SQLite local en mode WAL (sans serveur)</li>
+    <li>Sauvegardes automatiques configurables (30 dernières)</li>
+    <li>Aucun Internet requis (sauf e-mail)</li>
+    <li>Repli <code>%APPDATA%</code> si C:\ en lecture seule</li>
+    <li>Compatible Windows 10/11 (avec Microsoft Edge)</li>
+  </ul>
+</div>
+
+</div>
+
+</section>
+
+<div class="foot">
+  <strong>GesFacPress v2.0.0</strong> &nbsp;·&nbsp; © LMC Software 2026 &nbsp;·&nbsp;
+  <a href="mailto:info@gesfacpress.com" style="color:var(--blue);text-decoration:none">info@gesfacpress.com</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.gesfacpress.com" style="color:var(--blue);text-decoration:none">www.gesfacpress.com</a>
+</div>
+
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick*="'${l}'"]`).classList.add('active');
+  document.getElementById('sec-pt').style.display = (l === 'pt') ? 'block' : 'none';
+  document.getElementById('sec-fr').style.display = (l === 'fr') ? 'block' : 'none';
+  document.getElementById('hero-sub').textContent = (l === 'fr')
+    ? "Logiciel de gestion et facturation pour PME — 100 % hors ligne, multilingue, conforme à la réglementation fiscale française et portugaise."
+    : "Software de gestão e facturação para PME — 100% offline, multilingue, conforme a regulamentação fiscal portuguesa e francesa.";
+  document.documentElement.lang = l;
+  try { localStorage.setItem('gfp_lang', l); } catch(e){}
+}
+
+// Detecção automática de idioma: prioridade
+//   1. ?lang=fr no URL (link directo)
+//   2. localStorage (escolha anterior do utilizador)
+//   3. navigator.language (idioma do browser/SO)
+//   4. fallback PT
+(function(){
+  let detected = 'pt';
+  try {
+    const url = new URL(window.location.href);
+    const urlLang = (url.searchParams.get('lang') || '').toLowerCase();
+    if (urlLang === 'pt' || urlLang === 'fr') {
+      detected = urlLang;
+    } else {
+      const stored = localStorage.getItem('gfp_lang');
+      if (stored === 'pt' || stored === 'fr') {
+        detected = stored;
+      } else {
+        const nav = (navigator.language || navigator.userLanguage || 'pt').toLowerCase();
+        if (nav.startsWith('fr')) detected = 'fr';
+        else if (nav.startsWith('pt')) detected = 'pt';
+        // EN/ES/outros caem para PT (mais conteúdo PT na página)
+      }
+    }
+  } catch(e){}
+  setLang(detected);
+})();
+</script>
+</body>
+</html>
