@@ -414,7 +414,7 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var
 </div>
 
 <script>
-function setLang(l){
+function setLang(l, persist){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick*="'${l}'"]`).classList.add('active');
   document.getElementById('sec-pt').style.display = (l === 'pt') ? 'block' : 'none';
@@ -425,7 +425,11 @@ function setLang(l){
   document.getElementById('back-top-txt').textContent = (l === 'fr') ? "Retour au site" : "Voltar ao site";
   document.getElementById('back-bot-txt').textContent = (l === 'fr') ? "Retour au site GesFacPress" : "Voltar ao site GesFacPress";
   document.documentElement.lang = l;
-  try { localStorage.setItem('gfp_lang', l); } catch(e){}
+  // Só guardar quando o utilizador clica explicitamente — evitar sobrescrever
+  // 'en'/'es' que o site tenha guardado anteriormente (a funcionalidades só tem PT/FR).
+  if(persist !== false){
+    try { localStorage.setItem('gfp_lang', l); } catch(e){}
+  }
 }
 
 // Detecção automática de idioma: prioridade
@@ -452,7 +456,8 @@ function setLang(l){
       }
     }
   } catch(e){}
-  setLang(detected);
+  // false = não persistir auto-detecção (preserva 'en'/'es' guardado pelo site)
+  setLang(detected, false);
 })();
 </script>
 </body>
