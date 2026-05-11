@@ -999,10 +999,9 @@ footer span{color:#60a5fa}
       <p id="m-sub"></p>
     </div>
     <form class="modal-body" id="m-body" name="demo-request" method="POST"
-          data-netlify="true" netlify-honeypot="bot-field"
           onsubmit="return submitForm(event)">
-      <input type="hidden" name="form-name" value="demo-request">
-      <p style="display:none"><label>Não preencher: <input name="bot-field"></label></p>
+      <!-- honeypot anti-bot (formsubmit.co lê o campo _honey) -->
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
       <div class="form-row">
         <div class="fg"><label class="req" id="l-name" for="f-name">Nome</label>
@@ -1187,8 +1186,8 @@ const T = {
     lName:"Nome",lCo:"Empresa",lEmail:"E-mail",lPhone:"Telefone",lCountry:"País",lMsg:"Mensagem (opcional)",
     phName:"O seu nome",phCo:"Nome da empresa",phPhone:"+351 ...",phMsg:"Conte-nos um pouco sobre a sua empresa...",
     mSubmit:"Pedir Demonstração Gratuita →",
-    mNote:"Ao submeter, abre o seu cliente de e-mail com os dados preenchidos.",
-    sucT:"E-mail preparado!",sucP:"O seu cliente de e-mail abriu com os dados preenchidos. Verifique e clique em Enviar.",
+    mNote:"O seu pedido é enviado de forma segura. Resposta em menos de 24 horas.",
+    sucT:"Pedido recebido!",sucP:"O seu pedido foi enviado com sucesso. Responderemos em menos de 24 horas para o e-mail que indicou.",
     sucClose:"Fechar",
     errReq:"Por favor preencha o nome, empresa e e-mail.",
     mailSub:"Pedido de Demonstração — GesFacPress",
@@ -1318,8 +1317,8 @@ const T = {
     lName:"Nom",lCo:"Entreprise",lEmail:"E-mail",lPhone:"Téléphone",lCountry:"Pays",lMsg:"Message (optionnel)",
     phName:"Votre nom",phCo:"Nom de l'entreprise",phPhone:"+33 ...",phMsg:"Parlez-nous de votre entreprise...",
     mSubmit:"Demander une Démonstration Gratuite →",
-    mNote:"En soumettant, votre client e-mail s'ouvre avec les données pré-remplies.",
-    sucT:"E-mail prêt !",sucP:"Votre client e-mail s'est ouvert avec les données pré-remplies. Vérifiez et cliquez sur Envoyer.",
+    mNote:"Votre demande est envoyée de manière sécurisée. Réponse en moins de 24 heures.",
+    sucT:"Demande reçue !",sucP:"Votre demande a été envoyée avec succès. Nous vous répondrons en moins de 24 heures à l'adresse indiquée.",
     sucClose:"Fermer",
     errReq:"Veuillez remplir le nom, l'entreprise et l'e-mail.",
     mailSub:"Demande de Démonstration — GesFacPress",
@@ -1449,8 +1448,8 @@ const T = {
     lName:"Name",lCo:"Company",lEmail:"E-mail",lPhone:"Phone",lCountry:"Country",lMsg:"Message (optional)",
     phName:"Your name",phCo:"Company name",phPhone:"+44 ...",phMsg:"Tell us about your company...",
     mSubmit:"Request Free Demo →",
-    mNote:"On submit, your email client opens with the details pre-filled.",
-    sucT:"Email ready!",sucP:"Your email client opened with the details pre-filled. Check your outbox and click Send.",
+    mNote:"Your request is sent securely. We'll reply within 24 hours.",
+    sucT:"Request received!",sucP:"Your request has been sent successfully. We'll reply within 24 hours to the email you provided.",
     sucClose:"Close",
     errReq:"Please fill in your name, company and email.",
     mailSub:"Demo Request — GesFacPress",
@@ -1580,8 +1579,8 @@ const T = {
     lName:"Nombre",lCo:"Empresa",lEmail:"E-mail",lPhone:"Teléfono",lCountry:"País",lMsg:"Mensaje (opcional)",
     phName:"Su nombre",phCo:"Nombre de la empresa",phPhone:"+34 ...",phMsg:"Cuéntenos sobre su empresa...",
     mSubmit:"Solicitar Demostración Gratuita →",
-    mNote:"Al enviar, su cliente de correo se abre con los datos pre-rellenados.",
-    sucT:"¡Correo listo!",sucP:"Su cliente de correo se abrió con los datos pre-rellenados. Revise y haga clic en Enviar.",
+    mNote:"Su solicitud se envía de forma segura. Respuesta en menos de 24 horas.",
+    sucT:"¡Solicitud recibida!",sucP:"Su solicitud se envió correctamente. Responderemos en menos de 24 horas al correo indicado.",
     sucClose:"Cerrar",
     errReq:"Por favor complete el nombre, empresa y e-mail.",
     mailSub:"Solicitud de Demostración — GesFacPress",
@@ -1829,11 +1828,20 @@ function closeModal(){
 }
 function closeOut(e){ if(e.target===document.getElementById('modal')) closeModal(); }
 
+// Envio do pedido de demo via formsubmit.co (sem precisar de cliente de email no PC).
+// NOTA: a 1ª submissão de sempre faz formsubmit.co enviar um email de activação para
+// info@gesfacpress.com — clicar uma vez no link de confirmação e fica activo para sempre.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@gesfacpress.com';
+
 function submitForm(event){
   if(event) event.preventDefault();
   const n = document.getElementById('f-name').value.trim();
   const c = document.getElementById('f-co').value.trim();
   const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const sel = document.getElementById('f-country');
+  const country = sel.options[sel.selectedIndex].text;
+  const msg = document.getElementById('f-msg').value.trim();
   const t = T[lang];
   if(!n||!c||!email){ alert(t.errReq); return false; }
 
@@ -1848,25 +1856,47 @@ function submitForm(event){
   btn.disabled = true;
   btnTxt.textContent = '⏳  ...';
 
-  const data = new FormData(form);
-  const body = new URLSearchParams(data).toString();
-
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: body,
-  })
-  .then(response => {
-    if (!response.ok) throw new Error('HTTP ' + response.status);
+  // Honeypot — se preenchido, bot detectado, abortar silenciosamente
+  const honey = form.querySelector('input[name="_honey"]');
+  if(honey && honey.value){
     form.classList.add('hidden');
     document.getElementById('m-success').classList.add('show');
+    return false;
+  }
+
+  const payload = {
+    name: n,
+    company: c,
+    email: email,
+    phone: phone,
+    country: country,
+    message: msg,
+    language: lang,
+    _subject: t.mailSub,
+    _template: 'table',
+    _captcha: 'false',
+  };
+
+  fetch(FORM_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+  .then(r => r.json())
+  .then(j => {
+    // formsubmit devolve {success:"true",...} em string
+    if(j && (j.success === 'true' || j.success === true)){
+      form.classList.add('hidden');
+      document.getElementById('m-success').classList.add('show');
+    } else {
+      throw new Error(j && j.message ? j.message : 'submit-failed');
+    }
   })
   .catch(err => {
-    // Fallback: mailto caso Netlify falhe
-    const phone = document.getElementById('f-phone').value.trim();
-    const sel = document.getElementById('f-country');
-    const country = sel.options[sel.selectedIndex].text;
-    const msg = document.getElementById('f-msg').value.trim();
+    // Último recurso: mailto (só se o navegador não tiver acesso à internet)
     const sub = encodeURIComponent(t.mailSub);
     const bd = encodeURIComponent(t.mailBody(n,c,phone,country,msg));
     window.location.href = 'mailto:info@gesfacpress.com?subject='+sub+'&body='+bd;
@@ -2055,10 +2085,12 @@ function toggleFaq(i){
 })();
 
 // ─────────────────────────────────────────────────────────────
-// REACÇÕES DOS VISITANTES — contadores públicos via counterapi.dev
+// REACÇÕES DOS VISITANTES — contadores públicos via abacus.jasoncameron.dev
+// API: GET /get/{ns}/{key} → {value:N} (não incrementa, auto-cria com 0)
+//      GET /hit/{ns}/{key} → {value:N+1} (incrementa atomicamente)
 // ─────────────────────────────────────────────────────────────
-const REACT_NS  = 'gesfacpress';            // namespace público
-const REACT_API = 'https://api.counterapi.dev/v1';
+const REACT_NS  = 'gesfacpress.com';        // namespace público (qualquer string)
+const REACT_API = 'https://abacus.jasoncameron.dev';
 const REACT_KEYS = ['like','love','useful','recommend'];
 const VOTE_COOLDOWN_MS = 24 * 60 * 60 * 1000; // 24h por botão por browser
 
@@ -2076,18 +2108,18 @@ function _hasVotedRecently(k){
 }
 async function _fetchCount(k){
   try {
-    const r = await fetch(`${REACT_API}/${REACT_NS}/${k}`, {cache:'no-store'});
+    const r = await fetch(`${REACT_API}/get/${REACT_NS}/${k}`, {cache:'no-store'});
     if(!r.ok) return null;
     const j = await r.json();
-    return (j && (j.count != null ? j.count : (j.value != null ? j.value : null)));
+    return (j && typeof j.value === 'number') ? j.value : null;
   } catch(e){ return null; }
 }
 async function _incrementCount(k){
   try {
-    const r = await fetch(`${REACT_API}/${REACT_NS}/${k}/up`, {cache:'no-store'});
+    const r = await fetch(`${REACT_API}/hit/${REACT_NS}/${k}`, {cache:'no-store'});
     if(!r.ok) return null;
     const j = await r.json();
-    return (j && (j.count != null ? j.count : (j.value != null ? j.value : null)));
+    return (j && typeof j.value === 'number') ? j.value : null;
   } catch(e){ return null; }
 }
 async function _loadAllCounts(){
@@ -2095,7 +2127,9 @@ async function _loadAllCounts(){
     const el = document.getElementById('r-cnt-' + k);
     if(!el) continue;
     const n = await _fetchCount(k);
-    el.textContent = (n == null) ? '0' : _fmtCount(n);
+    // Anti-flicker: se fetch falha (n==null), manter '…' em vez de mostrar '0'
+    // — '0' real só aparece quando o servidor confirma value:0
+    if(n != null) el.textContent = _fmtCount(n);
     // marcar como já votado (UI) se o utilizador votou nas últimas 24h
     if(_hasVotedRecently(k)){
       const btn = document.querySelector(`.react-btn[data-key="${k}"]`);
