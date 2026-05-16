@@ -226,6 +226,9 @@ section,.pricing-section,.trial-section,.testi-section,.lang-section,.off-sectio
 
 footer{background:#0f172a;color:#94a3b8;padding:24px;text-align:center;font-size:13px}
 footer span{color:#60a5fa}
+footer .flinks{margin-top:10px;font-size:12px}
+footer .flinks a{color:#94a3b8;text-decoration:none;margin:0 8px}
+footer .flinks a:hover{color:#fff;text-decoration:underline}
 
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:500;
@@ -970,12 +973,12 @@ footer span{color:#60a5fa}
   </div>
   <div class="qr-grid">
     <div class="qr-card">
-      <img src="qr_site.png" alt="QR site gesfacpress.com" loading="lazy">
+      <img src="qr_site.png" id="qr-site-img" alt="QR site gesfacpress.com" loading="lazy">
       <div class="qr-label" id="qr-l1">Abrir site</div>
       <code class="qr-url">gesfacpress.com</code>
     </div>
     <div class="qr-card">
-      <img src="qr_download.png" alt="QR descarga GesFacPress" loading="lazy">
+      <img src="qr_download.png" id="qr-down-img" alt="QR descarga GesFacPress" loading="lazy">
       <div class="qr-label" id="qr-l2">Descarregar app</div>
       <code class="qr-url">v2.0.0 · 96 MB</code>
     </div>
@@ -1023,6 +1026,11 @@ footer span{color:#60a5fa}
 <footer>
   <strong style="color:#fff">GesFacPress</strong> — <span>gesfacpress.com</span><br>
   <span id="ftag"></span>
+  <div class="flinks">
+    <a href="mentions-legales.html" id="flink-ml">Mentions légales</a>·
+    <a href="politique-confidentialite.html" id="flink-pc">Politique de confidentialité</a>
+  </div>
+  <div class="flinks" style="margin-top:6px;color:#64748b">© 2026 LC Soft · Luis Carvalho · Levallois-Perret, France</div>
 </footer>
 
 <!-- MODAL -->
@@ -1151,6 +1159,9 @@ const T = {
     priceModular:"Sob consulta",
     ctaT:"Pronto para simplificar a sua gestão?",ctaP:"30 dias de ensaio gratuito. Sem cartão de crédito. Sem compromisso.",
     ctaMain:"Iniciar ensaio gratuito — 30 DIAS GRÁTIS",ftag:"Software de Gestão e Faturação para PME",
+    pageTitle:"GesFacPress — Faturação & Gestão para PME",
+    qrSiteAlt:"QR site gesfacpress.com",qrDownAlt:"QR descarga GesFacPress",
+    legalNotice:"Menções legais",privacyPolicy:"Política de privacidade",
     floatLbl:"Pedir Demo Grátis",
     // Pricing 4 planos
     priceTitle:"Planos e Preços",priceSub:"Subscrição mensal. Comece com 30 dias de ensaio gratuito sem compromisso.",
@@ -1289,6 +1300,9 @@ const T = {
     priceModular:"Sur mesure",
     ctaT:"Prêt à simplifier votre gestion ?",ctaP:"100 % gratuit pendant 30 jours. Sans carte de crédit. Sans engagement.",
     ctaMain:"Télécharger maintenant — 30 JOURS GRATUITS",ftag:"Logiciel de Gestion et Facturation pour PME",
+    pageTitle:"GesFacPress — Logiciel de Facturation & Gestion pour PME",
+    qrSiteAlt:"QR site gesfacpress.com",qrDownAlt:"QR téléchargement GesFacPress",
+    legalNotice:"Mentions légales",privacyPolicy:"Politique de confidentialité",
     floatLbl:"Demander Démo Gratuite",
     // Pricing 4 plans
     priceTitle:"Plans et Tarifs",priceSub:"Abonnement mensuel. Commencez avec 30 jours d'essai gratuit sans engagement.",
@@ -1420,6 +1434,9 @@ const T = {
     priceModular:"Custom",
     ctaT:"Ready to simplify your management?",ctaP:"100% free for 30 days. No credit card. No commitment.",
     ctaMain:"Download now — 30 DAYS FREE",ftag:"Business Management & Invoicing Software for SMEs",
+    pageTitle:"GesFacPress — Invoicing & Management Software for SMEs",
+    qrSiteAlt:"QR code for gesfacpress.com",qrDownAlt:"QR code to download GesFacPress",
+    legalNotice:"Legal notice",privacyPolicy:"Privacy policy",
     floatLbl:"Request Free Demo",
     // Pricing 4 plans
     priceTitle:"Plans & Pricing",priceSub:"Monthly subscription. Start with a 30-day free trial, no commitment required.",
@@ -1551,6 +1568,9 @@ const T = {
     priceModular:"A medida",
     ctaT:"¿Listo para simplificar su gestión?",ctaP:"100% gratis durante 30 días. Sin tarjeta de crédito. Sin compromiso.",
     ctaMain:"Descargar ahora — 30 DÍAS GRATIS",ftag:"Software de Gestión y Facturación para PYME",
+    pageTitle:"GesFacPress — Software de Facturación & Gestión para PYME",
+    qrSiteAlt:"QR sitio gesfacpress.com",qrDownAlt:"QR descarga GesFacPress",
+    legalNotice:"Menciones legales",privacyPolicy:"Política de privacidad",
     floatLbl:"Solicitar Demo Gratis",
     // Pricing 4 planes
     priceTitle:"Planes y Precios",priceSub:"Suscripción mensual. Comience con 30 días de prueba gratuita sin compromiso.",
@@ -1718,6 +1738,13 @@ function setLang(l) {
   _st('cta-p', t.ctaP);
   _st('cta-main', t.ctaMain);
   _st('ftag', t.ftag);
+  _st('flink-ml', t.legalNotice);
+  _st('flink-pc', t.privacyPolicy);
+
+  // Page title (browser tab) + QR alt text
+  if(t.pageTitle) document.title = t.pageTitle;
+  var _qrs=document.getElementById('qr-site-img'); if(_qrs && t.qrSiteAlt) _qrs.alt=t.qrSiteAlt;
+  var _qrd=document.getElementById('qr-down-img'); if(_qrd && t.qrDownAlt) _qrd.alt=t.qrDownAlt;
 
   // Floating button
   _st('float-lbl', t.floatLbl);
