@@ -229,6 +229,16 @@ footer span{color:#60a5fa}
 footer .flinks{margin-top:10px;font-size:12px}
 footer .flinks a{color:#94a3b8;text-decoration:none;margin:0 8px}
 footer .flinks a:hover{color:#fff;text-decoration:underline}
+footer .fcontact{margin-top:8px;font-size:12px;color:#94a3b8}
+footer .fcontact a{color:#94a3b8;text-decoration:none;margin:0 6px}
+footer .fcontact a:hover{color:#fff;text-decoration:underline}
+.wa-fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;
+  background:#25D366;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.28);
+  text-decoration:none;font-size:28px;z-index:1000;transition:transform .2s;
+  color:#fff}
+.wa-fab:hover{transform:scale(1.1);background:#1ebe5c}
+@media(max-width:600px){.wa-fab{bottom:14px;right:14px;width:52px;height:52px;font-size:26px}}
 
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:500;
@@ -385,7 +395,8 @@ footer .flinks a:hover{color:#fff;text-decoration:underline}
   background:linear-gradient(135deg,var(--blue),var(--teal));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .price-cur{font-size:26px;vertical-align:top;margin-top:10px;display:inline-block}
-.price-per{font-size:16px;color:var(--muted);font-weight:400;-webkit-text-fill-color:var(--muted)}
+.price-per{font-size:16px;color:var(--muted);font-weight:400;-webkit-text-fill-color:var(--muted);white-space:nowrap}
+.price-billed{font-size:13px;color:var(--muted);text-align:center;margin-top:4px;min-height:18px}
 .price-desc{font-size:14px;color:var(--muted);margin-top:4px}
 .price-feats{list-style:none;margin:16px 0 20px;flex:1}
 .price-feats li{padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:14px;
@@ -869,6 +880,7 @@ footer .flinks a:hover{color:#fff;text-decoration:underline}
         <div class="price-name" id="pn0">Base</div>
         <div class="price-original" id="porig0"></div>
         <div class="price-val"><span class="price-cur">€</span><span id="pnum0">10</span><span class="price-per" id="pc0">/mês</span></div>
+        <div class="price-billed" id="pbilled0"></div>
         <div class="price-saving" id="psave0"></div>
         <div class="price-consult-note" id="pd0-note">30 dias de ensaio gratuito</div>
         <div class="price-desc" id="pd0">Ideal para freelancers e microempresas</div>
@@ -884,6 +896,7 @@ footer .flinks a:hover{color:#fff;text-decoration:underline}
         <div class="price-name" id="pn1">Standard</div>
         <div class="price-original" id="porig1"></div>
         <div class="price-val"><span class="price-cur">€</span><span id="pnum1">22</span><span class="price-per" id="pc1">/mês</span></div>
+        <div class="price-billed" id="pbilled1"></div>
         <div class="price-saving" id="psave1"></div>
         <div class="price-consult-note" id="pd1-note">30 dias de ensaio gratuito</div>
         <div class="price-desc" id="pd1">Para PME em crescimento</div>
@@ -898,6 +911,7 @@ footer .flinks a:hover{color:#fff;text-decoration:underline}
         <div class="price-name" id="pn2">Empresarial</div>
         <div class="price-original" id="porig2"></div>
         <div class="price-val"><span class="price-cur">€</span><span id="pnum2">35</span><span class="price-per" id="pc2">/mês</span></div>
+        <div class="price-billed" id="pbilled2"></div>
         <div class="price-saving" id="psave2"></div>
         <div class="price-consult-note" id="pd2-note">30 dias de ensaio gratuito</div>
         <div class="price-desc" id="pd2">Para empresas com necessidades avançadas</div>
@@ -1020,18 +1034,29 @@ footer .flinks a:hover{color:#fff;text-decoration:underline}
 <section class="cta-section" id="cta">
   <h2 id="cta-t"></h2>
   <p id="cta-p"></p>
-  <button class="btn-white" id="cta-main" onclick="openModal()"></button>
+  <a class="btn-white" id="cta-main"
+     href="https://github.com/gesfacpress/gesfacpress/releases/download/v2.0.0/GesFacPress_Setup_v2.0.0.zip"
+     style="text-decoration:none"></a>
 </section>
 
 <footer>
   <strong style="color:#fff">GesFacPress</strong> — <span>gesfacpress.com</span><br>
   <span id="ftag"></span>
+  <div class="fcontact">
+    📧 <a href="mailto:info@gesfacpress.com">info@gesfacpress.com</a> ·
+    📞 <a href="tel:+33780816392">+33 7 80 81 63 92</a> ·
+    💬 <a href="https://wa.me/33780816392" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
   <div class="flinks">
     <a href="mentions-legales.html" id="flink-ml">Mentions légales</a>·
     <a href="politique-confidentialite.html" id="flink-pc">Politique de confidentialité</a>
   </div>
-  <div class="flinks" style="margin-top:6px;color:#64748b">© 2026 LC Soft · Luis Carvalho · Levallois-Perret, France</div>
+  <div class="flinks" style="margin-top:6px;color:#64748b">© 2026 LC Gesfacpress · Luis Carvalho · Levallois-Perret, France</div>
 </footer>
+
+<!-- Botão flutuante WhatsApp (presente em todas as línguas, mensagem traduzida via JS) -->
+<a class="wa-fab" id="wa-fab" href="https://wa.me/33780816392?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20o%20GesFacPress."
+   target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeOut(event)">
@@ -1162,6 +1187,7 @@ const T = {
     pageTitle:"GesFacPress — Faturação & Gestão para PME",
     qrSiteAlt:"QR site gesfacpress.com",qrDownAlt:"QR descarga GesFacPress",
     legalNotice:"Menções legais",privacyPolicy:"Política de privacidade",
+    waMsg:"Olá, gostaria de informações sobre o GesFacPress.",
     floatLbl:"Pedir Demo Grátis",
     // Pricing 4 planos
     priceTitle:"Planos e Preços",priceSub:"Subscrição mensal. Comece com 30 dias de ensaio gratuito sem compromisso.",
@@ -1303,6 +1329,7 @@ const T = {
     pageTitle:"GesFacPress — Logiciel de Facturation & Gestion pour PME",
     qrSiteAlt:"QR site gesfacpress.com",qrDownAlt:"QR téléchargement GesFacPress",
     legalNotice:"Mentions légales",privacyPolicy:"Politique de confidentialité",
+    waMsg:"Bonjour, je souhaite des informations sur GesFacPress.",
     floatLbl:"Demander Démo Gratuite",
     // Pricing 4 plans
     priceTitle:"Plans et Tarifs",priceSub:"Abonnement mensuel. Commencez avec 30 jours d'essai gratuit sans engagement.",
@@ -1437,6 +1464,7 @@ const T = {
     pageTitle:"GesFacPress — Invoicing & Management Software for SMEs",
     qrSiteAlt:"QR code for gesfacpress.com",qrDownAlt:"QR code to download GesFacPress",
     legalNotice:"Legal notice",privacyPolicy:"Privacy policy",
+    waMsg:"Hello, I'd like information about GesFacPress.",
     floatLbl:"Request Free Demo",
     // Pricing 4 plans
     priceTitle:"Plans & Pricing",priceSub:"Monthly subscription. Start with a 30-day free trial, no commitment required.",
@@ -1571,6 +1599,7 @@ const T = {
     pageTitle:"GesFacPress — Software de Facturación & Gestión para PYME",
     qrSiteAlt:"QR sitio gesfacpress.com",qrDownAlt:"QR descarga GesFacPress",
     legalNotice:"Menciones legales",privacyPolicy:"Política de privacidad",
+    waMsg:"Hola, me gustaría información sobre GesFacPress.",
     floatLbl:"Solicitar Demo Gratis",
     // Pricing 4 planes
     priceTitle:"Planes y Precios",priceSub:"Suscripción mensual. Comience con 30 días de prueba gratuita sin compromiso.",
@@ -1745,6 +1774,12 @@ function setLang(l) {
   if(t.pageTitle) document.title = t.pageTitle;
   var _qrs=document.getElementById('qr-site-img'); if(_qrs && t.qrSiteAlt) _qrs.alt=t.qrSiteAlt;
   var _qrd=document.getElementById('qr-down-img'); if(_qrd && t.qrDownAlt) _qrd.alt=t.qrDownAlt;
+
+  // WhatsApp floating button — mensagem pré-feita traduzida
+  var _wafab=document.getElementById('wa-fab');
+  if(_wafab && t.waMsg){
+    _wafab.href = 'https://wa.me/33780816392?text=' + encodeURIComponent(t.waMsg);
+  }
 
   // Floating button
   _st('float-lbl', t.floatLbl);
@@ -2049,11 +2084,19 @@ const BILLING_LABELS = {
   en: ['Monthly','1 Year','2+ Years'],
   es: ['Mensual','1 Año','2+ Años'],
 };
+// Per (curto, inline com o preço) e Billed (nota separada por baixo).
+// Split para evitar quebra desigual entre Base €9 e Standard €19.80.
 const BILLING_PER = {
-  pt:['/mês','/mês · faturado anualmente','/mês · faturado bienalmente'],
-  fr:['/mois','/mois · facturé annuellement','/mois · facturé sur 2 ans'],
-  en:['/month','/month · billed annually','/month · billed every 2 years'],
-  es:['/mes','/mes · facturado anualmente','/mes · facturado cada 2 años'],
+  pt:['/mês','/mês','/mês'],
+  fr:['/mois','/mois','/mois'],
+  en:['/month','/month','/month'],
+  es:['/mes','/mes','/mes'],
+};
+const BILLING_BILLED = {
+  pt:['','· faturado anualmente','· faturado bienalmente'],
+  fr:['','· facturé annuellement','· facturé sur 2 ans'],
+  en:['','· billed annually','· billed every 2 years'],
+  es:['','· facturado anualmente','· facturado cada 2 años'],
 };
 const BILLING_SAVE = {
   pt:['','Poupa 10% por ano','Poupa 15% por ano'],
@@ -2069,18 +2112,21 @@ function setBilling(idx) {
   document.querySelectorAll('.billing-btn').forEach((b,i) =>
     b.classList.toggle('active', i === idx));
 
-  const disc = DISC[idx];
-  const per  = BILLING_PER[lang][idx];
+  const disc   = DISC[idx];
+  const per    = BILLING_PER[lang][idx];
+  const billed = BILLING_BILLED[lang][idx];
 
   BASE_PRICES.forEach((base, i) => {
     const discounted = disc > 0 ? Math.round(base * (1 - disc) * 100) / 100 : base;
-    const numEl  = document.getElementById('pnum' + i);
-    const perEl  = document.getElementById('pc' + i);
-    const origEl = document.getElementById('porig' + i);
-    const saveEl = document.getElementById('psave' + i);
+    const numEl    = document.getElementById('pnum' + i);
+    const perEl    = document.getElementById('pc' + i);
+    const billedEl = document.getElementById('pbilled' + i);
+    const origEl   = document.getElementById('porig' + i);
+    const saveEl   = document.getElementById('psave' + i);
 
     if(numEl) numEl.textContent = discounted % 1 === 0 ? discounted : discounted.toFixed(2);
     if(perEl) perEl.textContent = per;
+    if(billedEl) billedEl.textContent = billed || '';
 
     if(origEl) {
       if(disc > 0) {
